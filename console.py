@@ -47,6 +47,7 @@ class HBNBCommand(cmd.Cmd):
             new_instance = eval(args[0])()
         except:
             print("** class doesn't exist **")
+            return
 
         idx = 1
 
@@ -56,7 +57,7 @@ class HBNBCommand(cmd.Cmd):
             try:
                 obj_param = new_instance.__getattribute__(param[0])
                 if type(obj_param) == type(param[1]):
-                    new_instance.obj_param = param[1]
+                    setattr(new_instance, param[0], param[1])
                 else:
                     pass
             except ValueError:
