@@ -125,7 +125,7 @@ class test_console(unittest.TestCase):
 
     def test_class_name_doest_exist(self):
         '''
-            Testing the error messages for class name missing.
+        Testing the error messages for class name missing.
         '''
         console = self.create()
         console.onecmd("create Binita")
