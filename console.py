@@ -56,12 +56,14 @@ class HBNBCommand(cmd.Cmd):
             param = parameter.split("=")
             try:
                 obj_param = new_instance.__getattribute__(param[0])
-                if type(obj_param) == type(param[1]):
+                check = type(obj_param)
+                try:
+                    param[1] = check(param[1])
                     setattr(new_instance, param[0], param[1])
-                else:
-                    pass
-            except ValueError:
-                pass
+                except ValueError:
+                    return False
+            except AttributeError:
+                return False
             idx += 1
         new_instance.save()
         print(new_instance.id)
