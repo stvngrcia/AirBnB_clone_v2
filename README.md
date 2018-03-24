@@ -49,6 +49,24 @@ under the **test/** folder and can execute all of them by simply running:
 
 from the root directory.
 
+## Set-up
+
+### Database Set-up
+Project will be using MySQL server for its data storage which will use (at this time) a database `hbnb_dev_db` as the user `hbnb_dev`. The user's default credentials are `hbnb_dev_pwd`. 
+
+In order to perform this configuration, you can run the following commands:
+
+```cat setup_mysql_dev.sql | mysql -hlocalhost -uroot -p```
+
+by providing your root password.
+
+```echo "SHOW DATABASES;" | mysql -uhbnb_dev -p | grep hbnb_dev_db```
+
+will show you that you successfully created your database.
+
+```echo "SHOW GRANTS FOR 'hbnb_dev'@'localhost';" | mysql -uroot -p```
+
+will show you the specific privileges the user has on the different databases.
 
 ## Bugs
 
