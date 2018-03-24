@@ -10,6 +10,7 @@ import sys
 import io
 import unittest
 from models.base_model import BaseModel
+from models.state import State
 from models.engine.file_storage import FileStorage
 from console import HBNBCommand
 
@@ -123,9 +124,26 @@ class testFileStorage(unittest.TestCase):
                 self.assertTrue(value['name'] == 'California')
 
     def test_parameter_lack_of_validity(self):
-        '''Tests whether or not the parameter passes is an instance
+        '''
+        Tests whether or not the parameter passes is an instance
         of the class
         '''
         console = HBNBCommand()
-        with self.assertRaises(AttributeError):
-            console.onecmd("create State address=98")
+        self.assertFalse(console.onecmd("create State address=98"))
+
+
+    def test_deletion(self):
+        '''
+        Tests for an object being deleted with the delete method
+        '''
+        fs = FileStorage()
+        new_state = State()
+        new_state.name = "Polynesia"
+        fs.new(new_state)
+        my_id = new_state.id
+        fs.save()
+        fs.delete(new_state)
+        with open("file.json", encoding="UTF-8") as fd:
+            json_dict = json.load(fd)
+        for key, value in json_dict.items():
+            self.assertTrue(value['id'] != my_id)
