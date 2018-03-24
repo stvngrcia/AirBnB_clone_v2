@@ -6,9 +6,12 @@
 import os
 import time
 import json
+import sys
+import io
 import unittest
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
+from console import HBNBCommand
 
 
 class testFileStorage(unittest.TestCase):
@@ -27,7 +30,7 @@ class testFileStorage(unittest.TestCase):
         '''
             Cleaning up.
         '''
-
+        pass
         try:
             os.remove("file.json")
         except FileNotFoundError:
@@ -101,3 +104,28 @@ class testFileStorage(unittest.TestCase):
             self.assertTrue(True)
         except:
             self.assertTrue(False)
+
+    def test_parameter_validity(self):
+        '''
+        Tests whether or not the parameter passed is an instance of the
+        class
+        '''
+        console = HBNBCommand()
+        capturedOutput = io.StringIO()
+        sys.stdout = capturedOutput
+        my_id = console.onecmd("create State name='California'")
+        sys.stdout = sys.__stdout__
+        with open("file.json", encoding="UTF-8") as fd:
+            json_dict = json.load(fd)
+        for key, value in json_dict.items():
+            my_key = 'State.' + str(my_id)
+            if key == my_key:
+                self.assertTrue(value['name'] == 'California')
+
+    def test_parameter_lack_of_validity(self):
+        '''Tests whether or not the parameter passes is an instance
+        of the class
+        '''
+        console = HBNBCommand()
+        with self.assertRaises(AttributeError):
+            console.onecmd("create State address=98")
