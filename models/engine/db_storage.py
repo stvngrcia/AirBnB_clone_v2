@@ -71,13 +71,14 @@ class DBStorage():
         '''
         self.__session.add(obj)
         self.__session.commit()
-#        self.__session.close()
+        self.__session.close() ##############
 
     def save(self):
         '''
         Commits all changes of the current database session
         '''
         self.__session.commit()
+        self.__session.close() ########
 
     def delete(self, obj=None):
         '''
@@ -86,6 +87,7 @@ class DBStorage():
         if obj is not None:
             self.__session.delete(obj)
             self.__session.commit()
+#            self.__session.close() ##########
 
     def reload(self):
         '''
