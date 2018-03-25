@@ -7,6 +7,7 @@ import cmd
 import json
 import shlex
 from models.engine.file_storage import FileStorage
+from models import storage
 from models.base_model import BaseModel
 from models.user import User
 from models.place import Place
@@ -131,12 +132,15 @@ class HBNBCommand(cmd.Cmd):
             based or not on the class name.
         '''
         obj_list = []
-        storage = FileStorage()
-        storage.reload()
-        objects = storage.all()
+#        storage = FileStorage()
+#        storage.reload()
         try:
             if len(args) != 0:
                 eval(args)
+            if len(args) == 0:
+                objects = storage.all()
+            else:
+                objects = storage.all(args)
         except NameError:
             print("** class doesn't exist **")
             return
