@@ -25,11 +25,3 @@ class TestState(unittest.TestCase):
         '''
         new_state = State()
         self.assertTrue("name" in new_state.__dir__())
-
-    def test_State_attributes_type(self):
-        '''
-            Test that State class attribute name is class type str.
-        '''
-        new_state = State()
-        name = getattr(new_state, "name")
-        self.assertIsInstance(name, str)

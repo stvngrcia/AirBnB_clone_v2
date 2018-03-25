@@ -9,7 +9,7 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, scoped_session, exc
 import os
 
 
@@ -20,22 +20,21 @@ class DBStorage():
     __engine = None
     __session = None
 
-    def init(self):
+    def __init__(self):
         '''
         Creates engine connection
         '''
-        username = os.getenv(HBNB_MYSQL_USER, default=None)
-        password = os.getenv(HBNB_MYSQL_PWD, default=None)
-        localhost = os.getenv(HBNB_MYSQL_HOST, default=None)
-        db_name = os.getenv(HBNB_MYSQL_DB, default=None)
+        username = os.getenv('HBNB_MYSQL_USER', default=None)
+        password = os.getenv('HBNB_MYSQL_PWD', default=None)
+        localhost = os.getenv('HBNB_MYSQL_HOST', default=None)
+        db_name = os.getenv('HBNB_MYSQL_DB', default=None)
         connection = 'mysql+mysqldb://{}:{}@localhost/{}'
         self.__engine = create_engine(connection.format(
             username, password, db_name), pool_pre_ping=True)
-#        self.__session = Session()
-#        Base.metadata.create_all(bind=DBStorage.__engine)
-        if os.getenv(HBNB_ENV) == 'test':
+        if os.getenv('HBNB_ENV') == 'test':
+            Session = sessionmaker(bind=self.__engine)
             session = Session()
-            session.drop_all(bind=self.__engine)  #tables=Base.metadata.keys())
+            session.drop_all(bind=self.__engine)
             session.commit()
             session.close()
 
@@ -44,28 +43,32 @@ class DBStorage():
         Queries current database session based on class.
         Returns a dictionary representation of the query.
         '''
-        self.__session = Session()
-        if cls is not None:
-            result = self.__session.query(cls).all()
-        else:
-            result = self.__session.query(
-                User, State, City, Amenity, Place, Review)
-            # result = self.__session.query.all()
+        result = []
         new_dict = {}
-        for item in result:
-            key = item.__class__.__name__ + '.' + item.id
-            new_dict[key] = item
-        self.__session.close()
+        if cls is not None:
+            result = self.__session.query(eval(cls)).all()
+            for item in result:
+                key = item.__class__.__name__ + '.' + item.id
+                new_dict[key] = item
+        else:
+            my_classes = ['User', 'State', 'City', 'Amenity', 'Place', 'Review']
+            for class_name in my_classes:
+                try:
+                    result = (self.__session.query(eval(class_name)).all())
+                    for item in result:
+                        key = item.__class__.__name__ + '.' + item.id
+                        new_dict[key] = item
+                except Exception:
+                    continue
         return new_dict
 
     def new(self, obj):
         '''
         Adds the object to the current database session
         '''
-#        self.__session = Session()
         self.__session.add(obj)
         self.__session.commit()
-        self.__session.close()
+#        self.__session.close()
 
     def save(self):
         '''
@@ -86,6 +89,7 @@ class DBStorage():
         Creates all tables in the database.
         '''
         Base.metadata.create_all(self.__engine)
-        session_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        session_factory = sessionmaker(
+            bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(session_factory)
         self.__session = Session()
