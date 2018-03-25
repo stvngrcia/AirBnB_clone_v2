@@ -1,3 +1,4 @@
+-- creating test user and giving it permissions
 CREATE DATABASE IF NOT EXISTS hbnb_test_db;
 GRANT USAGE ON *.*
       TO 'hbnb_test'@'localhost'

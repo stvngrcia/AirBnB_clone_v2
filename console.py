@@ -34,7 +34,7 @@ class HBNBCommand(cmd.Cmd):
         '''
         return True
 
-    def do_create(self, args):
+    def do_create(self, arg):
         '''
             Create a new instance of class BaseModel and saves it
             to the JSON file.
@@ -50,7 +50,6 @@ class HBNBCommand(cmd.Cmd):
             return
 
         idx = 1
-
         while (idx < len(args)):
             parameter = args[idx]
             param = parameter.split("=")
