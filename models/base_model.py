@@ -36,8 +36,7 @@ class BaseModel:
                                                      "%Y-%m-%dT%H:%M:%S.%f")
             for key, val in kwargs.items():
                 if "__class__" not in key:
-                    self.key = val
-                    # setattr(self, key, val)
+                    setattr(self, key, val)
 
     def __str__(self):
         '''
@@ -68,7 +67,7 @@ class BaseModel:
         cp_dct = dict(self.__dict__)
         try:
             del cp_dct['_sa_instance_state']
-        except ValueError:
+        except KeyError:
             pass
         cp_dct['__class__'] = self.__class__.__name__
         cp_dct['updated_at'] = self.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%f")
