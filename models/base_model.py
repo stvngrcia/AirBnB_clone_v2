@@ -11,6 +11,7 @@ from sqlalchemy import Column, String, DateTime
 
 Base = declarative_base()
 
+
 class BaseModel:
     '''
         Base class for other classes to be used for the duration.
@@ -36,7 +37,7 @@ class BaseModel:
             for key, val in kwargs.items():
                 if "__class__" not in key:
                     self.key = val
-                    #setattr(self, key, val)
+                    # setattr(self, key, val)
 
     def __str__(self):
         '''

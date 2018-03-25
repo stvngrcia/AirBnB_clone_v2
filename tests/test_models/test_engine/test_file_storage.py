@@ -131,7 +131,6 @@ class testFileStorage(unittest.TestCase):
         console = HBNBCommand()
         self.assertFalse(console.onecmd("create State address=98"))
 
-
     def test_deletion(self):
         '''
         Tests for an object being deleted with the delete method
