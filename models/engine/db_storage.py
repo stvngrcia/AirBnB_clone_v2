@@ -51,8 +51,8 @@ class DBStorage():
                 key = item.__class__.__name__ + '.' + item.id
                 new_dict[key] = item
         else:
-            my_classes = ['User', 'State', 'City', 'Amenity', 'Place', 'Review']
-            for class_name in my_classes:
+            classes = ['User', 'State', 'City', 'Amenity', 'Place', 'Review']
+            for class_name in classes:
                 try:
                     result = (self.__session.query(eval(class_name)).all())
                     for item in result:
