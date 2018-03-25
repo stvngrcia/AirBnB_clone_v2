@@ -2,6 +2,7 @@
 '''
     Implementing the console for the HBnB project.
 '''
+import re
 import cmd
 import json
 import shlex
@@ -34,7 +35,7 @@ class HBNBCommand(cmd.Cmd):
         '''
         return True
 
-    def do_create(self, arg):
+    def do_create(self, args):
         '''
             Create a new instance of class BaseModel and saves it
             to the JSON file.
@@ -43,29 +44,30 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         try:
-            args = shlex.split(args)
+            args = re.split("\s|=", args)
             new_instance = eval(args[0])()
-        except:
+
+            for idx in range(1, len(args), 2):
+                key = args[idx]
+                value = args[idx + 1]
+                try:
+                    type_check = type(new_instance.__getattribute__(key))
+                except AttributeError:
+                    continue
+                if re.search("^\".*\"$", value) is not None:
+                    value = value.replace("_", " ")
+                elif "." in value and float == type_check:
+                    value = float(value)
+                elif re.search("\d.*", value) is not None:
+                    value = int(value)
+                else:
+                    continue
+                setattr(new_instance, key, value)
+            new_instance.save()
+            print(new_instance.id)
+        except NameError:
             print("** class doesn't exist **")
             return
-
-        idx = 1
-        while (idx < len(args)):
-            parameter = args[idx]
-            param = parameter.split("=")
-            try:
-                obj_param = new_instance.__getattribute__(param[0])
-                check = type(obj_param)
-                try:
-                    param[1] = check(param[1])
-                    setattr(new_instance, param[0], param[1])
-                except ValueError:
-                    return False
-            except AttributeError:
-                return False
-            idx += 1
-        new_instance.save()
-        print(new_instance.id)
 
     def do_show(self, args):
         '''
