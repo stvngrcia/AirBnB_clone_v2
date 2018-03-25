@@ -1,3 +1,4 @@
+-- Creating User and givig it permissions
 CREATE DATABASE IF NOT EXISTS hbnb_dev_db;
 GRANT USAGE ON *.*
       TO 'hbnb_dev'@'localhost'
