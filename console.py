@@ -52,13 +52,13 @@ class HBNBCommand(cmd.Cmd):
                 key = args[idx]
                 value = args[idx + 1]
                 try:
-                    type_check = type(new_instance.__getattribute__(key))
+                    new_instance.__getattribute__(key)
                 except AttributeError:
                     continue
                 if re.search("^\".*\"$", value) is not None:
                     value = value.replace("_", " ")
                     value = value.replace("\"", "")
-                elif "." in value and float == type_check:
+                elif "." in value:
                     value = float(value)
                 elif re.search("\d.*", value) is not None:
                     value = int(value)
