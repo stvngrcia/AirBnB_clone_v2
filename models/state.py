@@ -21,11 +21,11 @@ class State(BaseModel, Base):
     else:
         @property
         def get_city(self):
+            print('hi')
             city_dict = models.storage.all(City)
             state_query = State.id
             city_list = []
             for k, v in city_dict.items():
-                print('________k:', k)
-                print('________v:', v)
-#                if city_dict[k] == State.id and :
-#                    city_list.append(
+                if v.state_id == State.id:
+                    city_list.append(v)
+            return city_list
