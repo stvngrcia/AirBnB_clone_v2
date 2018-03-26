@@ -22,9 +22,18 @@ class FileStorage:
         else:
             my_dict = {}
             for k, v in self.__objects.items():
-                if 'State' in k:
+                if (eval('v').__class__.__name__) == cls:
                     my_dict[k] = v
             return my_dict
+#            if cls is None:
+#                return self.__objects
+#            if cls is not None:
+#                for k, v in self.__objects.items():
+#                    if 'City' in k:
+#                        my_dict[k] = v
+#                return my_dict
+#            else:
+#                return self.__objects
 
     def new(self, obj):
         '''
