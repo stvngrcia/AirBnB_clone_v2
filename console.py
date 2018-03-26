@@ -57,6 +57,7 @@ class HBNBCommand(cmd.Cmd):
                     continue
                 if re.search("^\".*\"$", value) is not None:
                     value = value.replace("_", " ")
+                    value = value.replace("\"", "")
                 elif "." in value:
                     value = float(value)
                 elif re.search("\d.*", value) is not None:
