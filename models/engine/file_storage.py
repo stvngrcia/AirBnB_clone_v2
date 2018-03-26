@@ -17,7 +17,14 @@ class FileStorage:
         '''
             Return the dictionary
         '''
-        return self.__objects
+        if cls is None:
+            return self.__objects
+        else:
+            my_dict = {}
+            for k, v in self.__objects.items():
+                if 'State' in k:
+                    my_dict[k] = v
+            return my_dict
 
     def new(self, obj):
         '''
