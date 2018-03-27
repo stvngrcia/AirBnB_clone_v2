@@ -76,7 +76,7 @@ class DBStorage():
         Commits all changes of the current database session
         '''
         self.__session.commit()
-        self.__session.close()
+        # self.__session.close()
 
     def delete(self, obj=None):
         '''
