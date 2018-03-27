@@ -47,7 +47,7 @@ class test_console(unittest.TestCase):
             Testing that show exists
         '''
         console = self.create()
-        console.onecmd("create User")
+        console.onecmd('create User email="test@test.com" password="pswd"')
         user_id = self.capt_out.getvalue()
         sys.stdout = self.backup
         self.capt_out.close()
@@ -63,7 +63,7 @@ class test_console(unittest.TestCase):
             Testing the error messages for class name missing.
         '''
         console = self.create()
-        console.onecmd("create User")
+        console.onecmd('create User email="test@test.com" password="pswd"')
         user_id = self.capt_out.getvalue()
         sys.stdout = self.backup
         self.capt_out.close()
@@ -79,7 +79,7 @@ class test_console(unittest.TestCase):
             Test show message error for id missing
         '''
         console = self.create()
-        console.onecmd("create User")
+        console.onecmd('create User email="test@test.com" password="pswd"')
         user_id = self.capt_out.getvalue()
         sys.stdout = self.backup
         self.capt_out.close()
@@ -95,7 +95,7 @@ class test_console(unittest.TestCase):
             Test show message error for id missing
         '''
         console = self.create()
-        console.onecmd("create User")
+        console.onecmd('create User email="test@test.com" password="pswd"')
         user_id = self.capt_out.getvalue()
         sys.stdout = self.backup
         self.capt_out.close()
@@ -111,7 +111,7 @@ class test_console(unittest.TestCase):
             Test that create works
         '''
         console = self.create()
-        console.onecmd("create User")
+        console.onecmd('create User email="test@test.com" password="pswd"')
         self.assertTrue(isinstance(self.capt_out.getvalue(), str))
 
     def test_class_name(self):
