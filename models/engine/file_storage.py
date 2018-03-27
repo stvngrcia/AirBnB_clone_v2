@@ -28,7 +28,6 @@ class FileStorage:
                 if name[0] in str(cls):
 #                if (eval('v').__class__.__name__) == cls:
 #                if v is cls:
-                    print('HELLLLLLO')
                     my_dict[k] = v
             return my_dict
 #                if (eval('v').__class__.__name__) == cls:
