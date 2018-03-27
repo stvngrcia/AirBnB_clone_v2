@@ -12,8 +12,9 @@ from io import StringIO
 import sys
 import datetime
 
+
 @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
-               "test only for FileStorage")
+                 "test only for FileStorage")
 class TestUser(unittest.TestCase):
     '''
         Testing User class

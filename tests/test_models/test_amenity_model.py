@@ -11,7 +11,7 @@ from models.amenity import Amenity
 
 
 @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
-               "test only for FileStorage")
+                 "test only for FileStorage")
 class TestAmenity(unittest.TestCase):
     '''
         Testing Amenity class
