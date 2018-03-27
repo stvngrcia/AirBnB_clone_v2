@@ -2,6 +2,7 @@
 '''
     This module defines the BaseModel class
 '''
+import os
 import uuid
 from datetime import datetime
 import models
@@ -16,6 +17,7 @@ class BaseModel:
     '''
         Base class for other classes to be used for the duration.
     '''
+
     id = Column(String(60), nullable=False, primary_key=True)
     created_at = Column(DateTime, default=datetime.utcnow(), nullable=False)
     updated_at = Column(DateTime, default=datetime.utcnow(), nullable=False)
@@ -30,10 +32,15 @@ class BaseModel:
             self.updated_at = datetime.now()
 
         else:
-            kwargs["created_at"] = datetime.strptime(kwargs["created_at"],
-                                                     "%Y-%m-%dT%H:%M:%S.%f")
-            kwargs["updated_at"] = datetime.strptime(kwargs["updated_at"],
-                                                     "%Y-%m-%dT%H:%M:%S.%f")
+            try:
+                kwargs["created_at"] = datetime.strptime(kwargs["created_at"],
+                                                        "%Y-%m-%dT%H:%M:%S.%f")
+                kwargs["updated_at"] = datetime.strptime(kwargs["updated_at"],
+                                                        "%Y-%m-%dT%H:%M:%S.%f")
+            except KeyError:
+                self.id = str(uuid.uuid4())
+                self.created_at = datetime.now()
+                self.updated_at = datetime.now()
             for key, val in kwargs.items():
                 if "__class__" not in key:
                     setattr(self, key, val)
