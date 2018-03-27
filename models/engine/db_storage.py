@@ -35,11 +35,7 @@ class DBStorage():
         self.__engine = create_engine(connection.format(
             username, password, db_name), pool_pre_ping=True)
         if os.getenv('HBNB_ENV') == 'test':
-#            Session = sessionmaker(bind=self.__engine)
-#            session = Session()
             Base.metadata.drop_all(self.__engine)
-#            session.commit()
-#            session.close()
 
     def all(self, cls=None):
         '''
