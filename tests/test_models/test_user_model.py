@@ -4,6 +4,7 @@
     All the test for the user model are implemented here.
 '''
 
+import os
 import unittest
 from models.base_model import BaseModel
 from models.user import User
@@ -11,7 +12,8 @@ from io import StringIO
 import sys
 import datetime
 
-
+@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+               "test only for FileStorage")
 class TestUser(unittest.TestCase):
     '''
         Testing User class
