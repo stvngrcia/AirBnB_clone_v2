@@ -17,7 +17,31 @@ class FileStorage:
         '''
             Return the dictionary
         '''
-        return self.__objects
+        if cls is None:
+            return self.__objects
+        else:
+            my_dict = {}
+            for k, v in self.__objects.items():
+                name = k.split('.')
+#                print(name[0])
+#                print(str(cls))
+                if name[0] in str(cls):
+#                if (eval('v').__class__.__name__) == cls:
+#                if v is cls:
+                    my_dict[k] = v
+            return my_dict
+#                if (eval('v').__class__.__name__) == cls:
+#                    my_dict[k] = v
+#            return my_dict
+#            if cls is None:
+#                return self.__objects
+#            if cls is not None:
+#                for k, v in self.__objects.items():
+#                    if 'City' in k:
+#                        my_dict[k] = v
+#                return my_dict
+#            else:
+#                return self.__objects
 
     def new(self, obj):
         '''
