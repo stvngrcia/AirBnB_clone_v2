@@ -7,7 +7,8 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
 import os
-
+import models
+from models.city import City
 
 class State(BaseModel, Base):
     '''
@@ -20,12 +21,11 @@ class State(BaseModel, Base):
                               cascade="delete")
     else:
         @property
-        def get_city(self):
-            print('hi')
+        def cities(self):
             city_dict = models.storage.all(City)
-            state_query = State.id
+            state_query = self.id
             city_list = []
             for k, v in city_dict.items():
-                if v.state_id == State.id:
+                if v.state_id == self.id:
                     city_list.append(v)
             return city_list
