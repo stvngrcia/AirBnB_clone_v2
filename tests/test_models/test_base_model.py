@@ -5,6 +5,7 @@
 '''
 
 import unittest
+import os
 from models.base_model import BaseModel
 from io import StringIO
 import sys
@@ -55,6 +56,8 @@ class TestBase(unittest.TestCase):
         self.assertEqual(self.my_model.updated_at.year,
                          self.my_model.created_at.year)
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     "Don't test if not FileStorage storing")
     def test_save(self):
         '''
             Checks that after updating the instance; the dates differ in the
