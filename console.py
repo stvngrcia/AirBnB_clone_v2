@@ -6,8 +6,6 @@ import re
 import cmd
 import json
 import shlex
-#from models.engine.file_storage import FileStorage
-#from models import storage
 import models
 from models.base_model import BaseModel
 from models.user import User
@@ -115,7 +113,6 @@ class HBNBCommand(cmd.Cmd):
         class_name = args[0]
         class_id = args[1]
         storage = models.storage
-#        storage = FileStorage()
         storage.reload()
         obj_dict = storage.all()
         try:
@@ -138,8 +135,6 @@ class HBNBCommand(cmd.Cmd):
         obj_list = []
         storage = models.storage
         storage.reload()
-#        storage = FileStorage()
-#        storage.reload()
         try:
             if len(args) != 0:
                 eval(args)
@@ -165,7 +160,6 @@ class HBNBCommand(cmd.Cmd):
             sent as args.
         '''
         storage = models.storage
-#        storage = FileStorage()
         storage.reload()
         args = shlex.split(args)
         if len(args) == 0:
@@ -212,7 +206,6 @@ class HBNBCommand(cmd.Cmd):
         '''
         obj_list = []
         storage = models.storage
-#       storage = FileStorage()
         storage.reload()
         objects = storage.all()
         try:
