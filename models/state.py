@@ -10,6 +10,7 @@ import os
 import models
 from models.city import City
 
+
 class State(BaseModel, Base):
     '''
         Implementation for the State.
@@ -21,6 +22,7 @@ class State(BaseModel, Base):
                               cascade="delete")
     else:
         name = ""
+
         @property
         def cities(self):
             city_dict = models.storage.all(City)

@@ -15,7 +15,8 @@ if os.getenv('HBNB_TYPE_STORAGE') == 'db':
                                   'places.id'), nullable=False),
                               Column('amenity_id', String(60), ForeignKey(
                                   'amenities.id'), nullable=False)
-                          )
+                              )
+
 
 class Place(BaseModel, Base):
     '''
