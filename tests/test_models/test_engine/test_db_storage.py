@@ -55,3 +55,13 @@ class testDBStorage(unittest.TestCase):
         test_me = str(state.id) + str(amenity.id) + str(user.id)
         if test_me in models.storage.all():
             self.assertTrue(state.name, "Cali")
+
+    def test_delete_method(self):
+        '''
+            Tests the delete method in db_storage
+        '''
+        state = State(name="Texas")
+        state.save()
+        all_stored = models.storage.all()
+        models.storage.delete(state)
+        self.assertTrue(all_stored["State." + state.id])

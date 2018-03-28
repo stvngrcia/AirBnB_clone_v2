@@ -16,7 +16,7 @@ from console import HBNBCommand
 
 
 @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
-               "test only for FileStorage")
+                 "test only for FileStorage")
 class testFileStorage(unittest.TestCase):
     '''
         Testing the FileStorage class
@@ -110,8 +110,8 @@ class testFileStorage(unittest.TestCase):
 
     def test_parameter_validity(self):
         '''
-        Tests whether or not the parameter passed is an instance of the
-        class
+            Tests whether or not the parameter passed is an instance of the
+            class
         '''
         console = HBNBCommand()
         capturedOutput = io.StringIO()
@@ -127,15 +127,19 @@ class testFileStorage(unittest.TestCase):
 
     def test_parameter_lack_of_validity(self):
         '''
-        Tests whether or not the parameter passes is an instance
-        of the class
+            Tests whether or not the parameter passes is an instance
+            of the class
         '''
         console = HBNBCommand()
-        self.assertFalse(console.onecmd("create State address=98"))
+        capturedOutput = io.StringIO()
+        sys.stdout = capturedOutput
+        my_id = console.onecmd("create State address=98")
+        sys.stdout = sys.__stdout__
+        self.assertIsNone(my_id)
 
     def test_deletion(self):
         '''
-        Tests for an object being deleted with the delete method
+            Tests for an object being deleted with the delete method
         '''
         fs = FileStorage()
         new_state = State()
