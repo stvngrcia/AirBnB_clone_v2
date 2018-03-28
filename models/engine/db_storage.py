@@ -72,7 +72,6 @@ class DBStorage():
         Commits all changes of the current database session
         '''
         self.__session.commit()
-        # self.__session.close()
 
     def delete(self, obj=None):
         '''
@@ -80,7 +79,7 @@ class DBStorage():
         '''
         if obj is not None:
             self.__session.delete(obj)
-            self.__session.commit()
+            self.save()
 
     def reload(self):
         '''
