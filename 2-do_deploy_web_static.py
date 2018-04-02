@@ -4,12 +4,12 @@ from datetime import datetime
 from fabric.api import *
 
 
-env.hosts = ['34.239.246.45','54.165.80.30']
+env.hosts = ['34.239.246.45', '54.165.80.30']
 
 
-def do_pack():
+def do_deploy(archive_path):
     '''
-        Creating an archive with the file in web_static folder
+        Deploys an archive to the web servers
     '''
     now = datetime.now()
     filename = "versions/web_static_{}{}{}{}{}{}.tgz".format(now.year,
@@ -25,12 +25,6 @@ def do_pack():
         return (filename)
     else:
         return None
-
-
-def do_deploy(archive_path):
-    '''
-        Deploys an archive to the web servers
-    '''
     if not os.path.exists(archive_path):
         return False
     result = put(archive_path, "/tmp/")
