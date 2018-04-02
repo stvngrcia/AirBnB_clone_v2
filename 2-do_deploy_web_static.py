@@ -21,10 +21,8 @@ def do_deploy(archive_path):
     print("Packing web_static to versions/{}".format(filename))
     local("mkdir -p versions")
     result = local("tar -vczf {} web_static".format(filename))
-    if result.succeeded:
-        return (filename)
-    else:
-        return None
+    if result.failed:
+        return False
     if not os.path.exists(archive_path):
         return False
     result = put(archive_path, "/tmp/")
