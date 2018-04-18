@@ -13,7 +13,10 @@ def teardown(exceptions):
 
 @app.route("/states_list", strict_slashes=False)
 def states_list():
-    states = storage.all("State")
+    state_obj = storage.all("State")
+    states = list()
+    for state, value in state_obj.items():
+        states.append(value)
     return render_template("7-states_list.html", states=states)
 
 if __name__ == "__main__":
