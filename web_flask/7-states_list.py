@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 from flask import Flask
-from models import storage
+from models import storage, State
 from flask import render_template
 
 app = Flask(__name__)
 
 
 @app.teardown_appcontext
-def teardown(exception):
+def teardown(exceptions):
     storage.close()
 
 
@@ -17,4 +17,4 @@ def states_list():
     return render_template("7-states_list.html", states=states)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0")
+    app.run(host="0.0.0.0", port=5000)
